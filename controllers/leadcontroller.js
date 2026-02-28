@@ -1,15 +1,20 @@
 const db = require("../config/db");
 
+function toBoolean(value) {
+  return value === true || value === "true" || value === 1 || value === "1";
+}
+
 function classificar(dados) {
-  if (
-    dados.faz_parte_bolsa_familia &&
-    dados.recebe_caixa_tem &&
-    dados.recebe_400_ou_mais &&
-    !dados.possui_emprestimo_crefisa
-  ) {
-    return "classificado";
+  const fazParte = toBoolean(dados.faz_parte_bolsa_familia);
+  const caixaTem = toBoolean(dados.recebe_caixa_tem);
+  const recebe400 = toBoolean(dados.recebe_400_ou_mais);
+  const possuiCrefisa = toBoolean(dados.possui_emprestimo_crefisa);
+
+  if (fazParte && caixaTem && recebe400 && !possuiCrefisa) {
+    return "qualificado";
   }
-  return "desclassificado";
+
+  return "desqualificado";
 }
 
 exports.criarLead = (req, res) => {
@@ -65,11 +70,19 @@ exports.criarLead = (req, res) => {
     ],
     (err) => {
       if (err) {
-        return res.status(500).json({ error: "Erro ao salvar lead" });
+        if (err.code === "ER_DUP_ENTRY") {
+          return res.status(400).json({
+            error: "CPF já cadastrado",
+          });
+        }
+
+        return res.status(500).json({
+          error: "Erro interno ao salvar lead",
+        });
       }
 
       res.json({ message: "Lead salvo com sucesso", status });
-    }
+    },
   );
 };
 

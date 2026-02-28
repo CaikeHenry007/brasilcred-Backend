@@ -52,7 +52,7 @@ exports.criarLead = (req, res) => {
      recebe_400_ou_mais,
      possui_emprestimo_crefisa,
      status)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
   `;
 
   db.query(

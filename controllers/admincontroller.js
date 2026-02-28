@@ -6,7 +6,7 @@ exports.login = (req, res) => {
   const { email, senha } = req.body;
 
   db.query(
-    "SELECT * FROM admin WHERE email = ?",
+    "SELECT * FROM admin WHERE email = $1",
     [email],
     async (err, results) => {
       if (err || results.length === 0) {
@@ -25,6 +25,6 @@ exports.login = (req, res) => {
       });
 
       res.json({ token });
-    }
+    },
   );
 };

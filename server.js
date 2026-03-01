@@ -6,9 +6,9 @@ const app = express();
 
 app.use(
   cors({
-    origin: ["http://localhost:8080", "https://seu-frontend.onrender.com"],
-    methods: ["GET", "POST"],
-    credentials: true,
+    origin: "*",
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
   }),
 );
 

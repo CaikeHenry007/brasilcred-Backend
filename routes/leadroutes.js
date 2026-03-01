@@ -3,5 +3,6 @@ const router = express.Router();
 const leadController = require("../controllers/leadcontroller");
 
 router.post("/", leadController.criarLead);
+router.get("/leads", leadController.listarLeads);
 
 module.exports = router;

@@ -7,7 +7,13 @@ const adminRoutes = require("./routes/adminroutes");
 
 const app = express();
 
-app.use(cors());
+app.use(
+  cors({
+    origin: ["http://localhost:8080", "https://seu-frontend.onrender.com"],
+    methods: ["GET", "POST"],
+    credentials: true,
+  }),
+);
 app.use(express.json());
 
 app.use("/leads", leadRoutes);

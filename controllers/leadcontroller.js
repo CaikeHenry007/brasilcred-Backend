@@ -70,7 +70,7 @@ exports.criarLead = (req, res) => {
     ],
     (err) => {
       if (err) {
-        if (err.code === "ER_DUP_ENTRY") {
+        if (err.code === "23505") {
           return res.status(400).json({
             error: "CPF já cadastrado",
           });
@@ -87,7 +87,7 @@ exports.criarLead = (req, res) => {
 };
 
 exports.listarLeads = (req, res) => {
-  db.query("SELECT * FROM leads ORDER BY criado_em DESC", (err, results) => {
+  db.query("SELECT * FROM leads ORDER BY created_at DESC", (err, results) => {
     if (err) return res.status(500).json({ error: "Erro ao buscar leads" });
     res.json(results);
   });

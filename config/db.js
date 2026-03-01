@@ -11,6 +11,37 @@ const pool = new Pool({
   },
 });
 
+async function criarTabelas() {
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS leads (
+      id SERIAL PRIMARY KEY,
+      nome TEXT NOT NULL,
+      whatsapp TEXT NOT NULL,
+      email TEXT,
+      cpf TEXT NOT NULL,
+      faz_parte_bolsa_familia BOOLEAN,
+      recebe_caixa_tem BOOLEAN,
+      recebe_400_ou_mais BOOLEAN,
+      possui_emprestimo_crefisa BOOLEAN,
+      status TEXT,
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    );
+  `);
+
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS admin (
+      id SERIAL PRIMARY KEY,
+      email TEXT UNIQUE NOT NULL,
+      senha TEXT NOT NULL,
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    );
+  `);
+
+  console.log("Tabelas verificadas/criadas com sucesso");
+}
+
+criarTabelas();
+
 pool
   .connect()
   .then((client) => {

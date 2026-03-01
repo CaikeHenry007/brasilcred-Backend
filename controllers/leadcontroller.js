@@ -2,11 +2,28 @@ const pool = require("../config/db");
 
 exports.getLeads = async (req, res) => {
   try {
-    const result = await pool.query(
-      "SELECT * FROM leads ORDER BY created_at DESC",
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 100;
+    const offset = (page - 1) * limit;
+
+    const leadsQuery = await pool.query(
+      "SELECT * FROM leads ORDER BY created_at DESC LIMIT $1 OFFSET $2",
+      [limit, offset],
     );
-    res.json(result.rows);
+
+    const countQuery = await pool.query("SELECT COUNT(*) FROM leads");
+
+    const total = parseInt(countQuery.rows[0].count);
+    const totalPages = Math.ceil(total / limit);
+
+    res.json({
+      leads: leadsQuery.rows,
+      total,
+      totalPages,
+      currentPage: page,
+    });
   } catch (error) {
+    console.error(error);
     res.status(500).json({ message: "Erro ao buscar leads" });
   }
 };

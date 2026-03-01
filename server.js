@@ -2,6 +2,8 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 
+const app = express();
+
 app.use(
   cors({
     origin: ["http://localhost:8080", "https://seu-frontend.onrender.com"],
@@ -12,8 +14,6 @@ app.use(
 
 const leadRoutes = require("./routes/leadroutes");
 const adminRoutes = require("./routes/adminroutes");
-
-const app = express();
 
 app.use(express.json());
 

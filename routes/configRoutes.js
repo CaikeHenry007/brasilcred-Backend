@@ -11,4 +11,4 @@ router.get("/", getConfig);
 // protegida (admin usa)
 router.post("/", authMiddleware, updateConfig);
 
-export default router;
+module.exports = router;

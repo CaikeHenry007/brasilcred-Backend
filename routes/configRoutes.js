@@ -1,6 +1,7 @@
 const express = require("express");
-import { getConfig, updateConfig } from "../controllers/configController.js";
-import authMiddleware from "../middleware/authMiddleware.js";
+const updateConfig = require("../controllers/configController.js");
+const getConfig = require("../controllers/configController.js");
+const authMiddleware = require("../middleware/authMiddleware.js");
 
 const router = express.Router();
 

@@ -1,4 +1,4 @@
-import express from "express";
+const express = require("express");
 import { getConfig, updateConfig } from "../controllers/configController.js";
 import authMiddleware from "../middleware/authMiddleware.js";
 

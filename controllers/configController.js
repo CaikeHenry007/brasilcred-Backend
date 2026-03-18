@@ -8,7 +8,7 @@ exports.getConfig = (req, res) => {
 };
 
 // POST → atualizar config
-export const updateConfig = (req, res) => {
+exports.updateConfig = (req, res) => {
     const { whatsappLink } = req.body;
 
     if (!whatsappLink) {

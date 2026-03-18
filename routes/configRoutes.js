@@ -1,7 +1,7 @@
 const express = require("express");
 const updateConfig = require("../controllers/configController.js");
 const getConfig = require("../controllers/configController.js");
-const authMiddleware = require("../middleware/authMiddleware.js");
+const authMiddleware = require("../middleware/authmiddleware.js");
 
 const router = express.Router();
 
